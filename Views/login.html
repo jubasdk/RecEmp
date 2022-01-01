@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+  <form action="login" method="post">
+    <label>User Name:</label>
+    <input type="text" name="username"><br><br>
+    <label>Password:</label>
+    <input type="password" name="password"><br><br>
+    <input type="radio" id="person" name="usertype" value="person">
+    <label for="person">Login as Person</label><br>
+    <input type="radio" id="company" name="usertype" value="company">
+    <label for="company">Login as Company</label><br><br>
+    <input type="submit" value="Submit">
+  </form>
+  <br><br>
+  <a href="http://localhost:5000/signup">I am a Person</a><br><br>
+  <a href="http://localhost:5000/signup/company">We are a Company</a>
+</body>
+
+
+</html>

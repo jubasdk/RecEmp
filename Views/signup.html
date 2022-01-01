@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <form id = 'input'>
+            <label>Person signup</label><br><br>
+            <label>Full name:</label>
+            <input type="text" id="fullname"><br>
+            <label>Age:</label>
+            <input type="text" name="age"><br>
+            <label>Country:</label>
+            <select name="countries" id="countries">
+                <option value="country1">country 1</option>
+                <option value="country2">counrty 2</option>
+                <option value="country3">country 3</option>
+                <option value="country4">counrty 4</option>
+            </select><br>
+            <label>City:</label>
+            <select name="cities" id="cities">
+                <option value="city1">city 1</option>
+                <option value="city2">city 2</option>
+                <option value="city3">city 3</option>
+                <option value="city4">city 4</option>
+            </select><br>
+            <label>Major:</label>
+            <select name="majores" id="majores">
+                <option value="CS">Computer science</option>
+                <option value="EE">Electrical engeniring</option>
+                <option value="M">Mathematics</option>
+                <option value="other">other</option>
+            </select><br>
+            <label>General Skill:</label>
+            <select name="skills" id="skills">
+                <option value="skill1">skill 1</option>
+                <option value="skill2">skill 2</option>
+                <option value="skill3">skill 3</option>
+                <option value="skill4">skill 4</option>
+            </select><br>
+            <label>General Skill:</label>
+            <select name="skills2" id="skills2">
+                <option value="skill5">skill 5</option>
+                <option value="skill6">skill 6</option>
+                <option value="skill7">skill 7</option>
+                <option value="skill8">skill 8</option>
+            </select><br>
+            <label>Email:</label>
+            <input type="email" id="email"><br>
+            <label>Password:</label>
+            <input type="password" id="password"><br>
+            <button type="button" id = "submit">Submit</button>
+          </form>
+          <p id = "Notification"></p>
+          <script>
+            var button = document.getElementById('submit');
+            button.addEventListener("click" , function() {
+                var correctdata = true;
+                const fullname = document.getElementById("fullname").value;
+                const age = document.getElementsByName("age")[0].value;
+                const country = document.getElementById("countries").selectedIndex + 1;
+                const city = document.getElementById("cities").selectedIndex + 1;
+                const major = document.getElementById("majores").selectedIndex + 1;
+                const skill1 = document.getElementById("skills").selectedIndex + 1;
+                const skill2 = document.getElementById("skills2").selectedIndex + 1 + 4;
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
+                if (fullname == "" || age == "" || password == "" || email == ""){
+                    correctdata = false;
+                }
+                if (correctdata){
+                    const data = {
+                        Fullname : fullname , 
+                        Age : age , 
+                        Country : country , 
+                        City : city , 
+                        Major : major , 
+                        Skill1 : skill1 , 
+                        Skill2 : skill2 , 
+                        Email : email , 
+                        Password : password
+                    };
+                    fetch("http://localhost:5000/signup" , {
+                        method : 'post' , 
+                        body : JSON.stringify(data) , 
+                        headers : new Headers({
+                            'Content-Type' : 'application/json'
+                        })
+                    })
+                    .then(res => { return res.text();})
+                    .then(Bo => {
+                        if (Bo == "EXIST"){
+                            document.getElementById("Notification").innerHTML = "Already EXIST";
+                        }else if (Bo == "NOTEXIST"){
+                            document.getElementById("Notification").innerHTML = "";
+                            window.location.href = "http://localhost:5000/upload";
+                        }
+                    });
+                    //document.getElementById("test").innerHTML = respone.body;
+                }
+                
+            });
+        </script>
+    </body>
+    
+</html>

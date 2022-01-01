@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+    </head>
+    <body>
+        <form>
+            <label>Company signup</label><br><br>
+            <label>Company name:</label>
+            <input type="text" id="name"><br>
+            <label>Company Description:</label>
+            <input type="text" id="description"><br>
+            <label>Company Username:</label>
+            <input type="text" id="username"><br>
+            <label>Company Password:</label>
+            <input type="password" id="password"><br>
+            <button type="button" id = "submit">Submit</button>
+        </form>
+        <p id = "Notification"></p>
+        <script>
+            var button = document.getElementById('submit');
+            button.addEventListener("click" , function(){
+                var correctdata = true;
+                const companyname = document.getElementById("name").value;
+                const companydescription = document.getElementById("description").value;
+                const username = document.getElementById("username").value;
+                const password = document.getElementById("password").value;
+                if (companyname == "" || companydescription == "" || username == "" || password == ""){
+                    correctdata = false;
+                }
+                if(correctdata){
+                    const data = {
+                        Companyname : companyname , 
+                        Companydescription : companydescription ,  
+                        Username : username , 
+                        Password : password , 
+                    };
+                    fetch("http://localhost:5000/signup/company" , {
+                        method : 'post' , 
+                        body : JSON.stringify(data) , 
+                        headers : new Headers({
+                            'Content-Type' : 'application/json'
+                        })
+                    })
+                    .then(res => { return res.text();})
+                    .then(Bo => {
+                        if (Bo == "EXIST"){
+                            document.getElementById("Notification").innerHTML = "Company username Already EXIST";
+                        }else if (Bo == "NOTEXIST"){
+                            document.getElementById("Notification").innerHTML = "";
+                            window.location.href = "http://localhost:5000";
+                        }
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>
