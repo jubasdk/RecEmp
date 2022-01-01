@@ -15,7 +15,7 @@ exports.DeleteJob = (req , res , next) => {
                 var aquery;
                 for(var i = 0 ; i < qdata.length ; i++){
                     if (qdata[i].JobID == Number(req.body.JOBID)){
-                        aquery = {JQAID: qdata[i].JQID};
+                        aquery = {JobQuestionID: qdata[i].JQID};
                         JQAnswer.deleteOne(aquery , function(err , obj1){
                             if (err) throw err;
                             //console.log("1 document deleted Answer");
